@@ -9,23 +9,7 @@ if (!file_exists("../config.php")) {
 }
 $error = false;
 $config_data = json_decode(file_get_contents("../config.php"), true);
-$id = $config_data['login'];
-
-if (isset($_POST['submit'])) {
-  $c = json_decode(file_get_contents("../config.php"), true);
-  $login_uuid = $_POST['login_uuid'];
-  $password = $_POST['password'];
-  $uuid = $c['login'];
-  $c_password = $c['password'];
-  if (!password_verify($password, $c_password)) {
-    $error = true;
-  } else {
-    echo "<script type='text/javascript'>
-        window.location= 'cases.php';
-        </script>";
-    exit();
-  }
-}
+$id = $config_data['device_id'];
 ?>
 <html>
 
@@ -35,7 +19,7 @@ if (isset($_POST['submit'])) {
   <link href="css/main.css" rel="stylesheet">
   <script src="js/jquery.min.js"></script>
   <script src="js/bootstrap.bundle.min.js"></script>
-  <script src="js/main.js"></script>
+  <script src="js/index.js"></script>
   <!------ Include the above in your HEAD tag ---------->
 
 </head>
@@ -47,24 +31,34 @@ if (isset($_POST['submit'])) {
       <div class="main-div">
         <div class="panel">
           <h2>Judge Login</h2>
-          <?php
-          if ($error) {
-          ?>
-            <div class="alert alert-danger">Invalid login details</div>
-          <?php
-          }
-          ?>
           <p>Please enter your email and password</p>
         </div>
-        <form id="Login" action="" method="post">
+        <div class="alert alert-danger alert-dismissible fade show" id="alertDiv" style="display: none" role="alert">
+          <strong><span id="message"></span></strong>
+          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <form class="login-form" method="post">
           <div class="form-group">
-            <input type="email" class="form-control" name="email" id="inputEmail" placeholder="Email Address">
+            <input type="email" class="form-control" required name="email" autofocus id="email" placeholder="Email Address">
           </div>
           <div class="form-group">
-            <input type="password" class="form-control" name="password" id="inputPassword" placeholder="Password">
+            <input type="password" class="form-control" required name="password" autocomplete="current_password" id="password" placeholder="Password">
           </div>
-          <input type="hidden" class="form-control" name="login_uuid" id="login_uuid" value=<?php echo $id; ?>>
-          <button type="submit" name="submit" id="submit" class="btn btn-primary">Login</button>
+          <input type="hidden" class="form-control" name="device_id" id="device_id" value=<?php echo $id; ?>>
+          <input type="submit" name="submit" id="submit" class="btn btn-primary" value='Login' />
+        </form>
+
+        <form action="login.php" method="post" style="display: none">
+          <div class="form-group">
+            <input type="email" class="form-control" name="email2" autofocus id="email2" placeholder="Email Address">
+          </div>
+          <div class="form-group">
+            <input type="password" class="form-control" name="password2" autocomplete="current_password" id="password2" placeholder="Password">
+          </div>
+          <input type="hidden" class="form-control" name="device_id2" id="device_id2" value=<?php echo $id; ?>>
+          <button type="submit" name="submit2" id="submit2" class="btn btn-primary">Login</button>
         </form>
       </div>
       <p class="botto-text">&copy;2019, All rights reserved.</p>

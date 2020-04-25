@@ -1,4 +1,8 @@
 <?php
+session_start();
+if (!isset($_SESSION['email'])) {
+  header("Location: index.php");
+}
 header('Content-type: text/html; charset=utf-8');
 $config = json_decode(file_get_contents("../config.php"), true);
 $server = $config['server'];

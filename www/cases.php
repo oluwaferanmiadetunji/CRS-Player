@@ -1,8 +1,12 @@
 <?php
-
+session_start();
+if (!isset($_SESSION['email'])) {
+  header("Location: index.php");
+}
 $config = json_decode(file_get_contents("../config.php"), true);
 $server = $config['server'];
 ?>
+
 <html>
 
   <head>
