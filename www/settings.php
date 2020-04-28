@@ -43,7 +43,9 @@ if (file_exists("../config.php")) {
           <div class="form-group">
             <input type="text" class="form-control" required name="server" id="server" placeholder="Server IP">
           </div>
-          <input type="hidden" class="form-control" required name="device_id" id="device_id" value=''>
+          <div class="form-group">
+            <input type="text" class="form-control" required name="device_id" id="device_id" placeholder="Licence key">
+          </div>
           <input type="submit" id="submit" name="submit" class="btn btn-primary" value="Signup">
         </form>
 
